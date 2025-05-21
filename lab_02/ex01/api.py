@@ -1,0 +1,36 @@
+from flask import Flask, request, jsonify
+from cipher.caesar import CaesarCipher 
+app = Flask(__name__)
+
+# CAESAR CIPHER ALGORITHM
+caesar_cipher = CaesarCipher()
+
+@app.route("/api/caesar/encrypt", methods=["POST"])
+def caesar_encrypt():
+    """
+    API endpoint for encrypting text using the Caesar cipher.
+    Expects a JSON payload with 'plain_text' and 'key'.
+    """
+    data = request.json 
+    plain_text = data['plain_text'] 
+    key = int(data['key']) 
+    
+    encrypted_text = caesar_cipher.encrypt_text(plain_text, key)
+    
+    return jsonify({'encrypted_message': encrypted_text})
+
+@app.route("/api/caesar/decrypt", methods=["POST"])
+def caesar_decrypt():
+    """
+    API endpoint for decrypting text using the Caesar cipher.
+    Expects a JSON payload with 'cipher_text' and 'key'.
+    """
+    data = request.json 
+    cipher_text = data['cipher_text'] 
+    key = int(data['key']) 
+    decrypted_text = caesar_cipher.decrypt_text(cipher_text, key)
+    return jsonify({'decrypted_message': decrypted_text})
+
+# Main function to run the Flask application
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
