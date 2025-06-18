@@ -49,8 +49,7 @@ while True:
     
     # Tạo SSL context
     context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    context.load_cert_chain(certfile="./certificates/server-cert.crt", 
-                            keyfile="./certificates/server-key.key")
+    context.load_cert_chain(certfile="Lab_05\\ssl\\certificates\\server-cert.crt", keyfile="Lab_05\\ssl\\certificates\\server-key.key")
     
     # Thiết lập kết nối SSL
     ssl_socket = context.wrap_socket(client_socket, server_side=True)
